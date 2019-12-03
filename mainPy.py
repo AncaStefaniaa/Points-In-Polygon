@@ -103,10 +103,10 @@ def print_points(points, cnt_points, points_convexity, points_principality):
 
 def graphic(points, cnt_points, convex_convexity, convex_principality):
     margin = 100;
-    scale = 40;
+    scale = 30;
     pointsCpy = [Point(0, 0)]
     for i in range(1, cnt_points + 1):
-        pointsCpy.append(Point(points[i][0] * scale + margin, points[i][1] * scale + margin))
+        pointsCpy.append(Point(points[i][0] * scale + margin, 500 - points[i][1] * scale + margin))
 
     c = Polygon(pointsCpy[1 : cnt_points + 1])
     win = GraphWin("Points in polygon", 1000, 1000)
