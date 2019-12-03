@@ -16,7 +16,7 @@ def read():
 
 def sign(point_a, point_b, point_c) -> int:
     value = (point_b[0] - point_a[0]) * (point_c[1] - point_a[1]) - (point_c[0] - point_a[0]) * \
-            (point_b[1] - point_a[0])
+            (point_b[1] - point_a[1])
     if value == 0:
         return 0
     return 1 if value > 0 else -1
