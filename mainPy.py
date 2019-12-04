@@ -102,7 +102,8 @@ def print_points(points, cnt_points, points_convexity, points_principality):
         print("Toate punctele sunt coliniare")
 
 def graphic(points, cnt_points, convex_convexity, convex_principality):
-    scale = 20;
+
+    scale = 20; #to amke points visible (  between point(1, 1) and point(2, 4) there is brely any difference
     windowHeight = 800
     windowWidth = 1540
     pointsCpy = [Point(0, 0)]
@@ -112,25 +113,31 @@ def graphic(points, cnt_points, convex_convexity, convex_principality):
                                                  windowHeight / 2 + points[i][1] * scale))
 
     c = Polygon(pointsCpy[1 : cnt_points + 1])
-    win = GraphWin("Points in polygon", windowWidth, windowHeight)
-    win.setCoords(0, 0, windowWidth, windowHeight)
-    inputBox = [[] for i in range(0, cnt_points + 1)]
 
+    win = GraphWin("Points in polygon", windowWidth, windowHeight) #set the window
+    win.setCoords(0, 0, windowWidth, windowHeight)  #set the geometric reference
+
+    inputBox = [[] for i in range(0, cnt_points + 1)]
     polygon_sign = get_polygon_orientation(points, cnt_points)
+
     for i in range(1, cnt_points + 1):
-        print(convex_principality[i], convex_convexity[i])
+
         if convex_principality[i] == -1 and convex_convexity[i] != polygon_sign:
             inputBox[i] = Entry(Point(pointsCpy[i].x, pointsCpy[i].y), len("Nepr|Neconv"))
             inputBox[i].setText("Nepr|Concav")
+
         elif convex_principality[i] == 1 and convex_convexity[i] != polygon_sign:
             inputBox[i] = Entry(Point(pointsCpy[i].x, pointsCpy[i].y), len("Pr|Neconv"))
             inputBox[i].setText("Pr|Concav")
+
         elif convex_principality[i] == -1 and convex_convexity[i] == polygon_sign:
             inputBox[i] = Entry(Point(pointsCpy[i].x, pointsCpy[i].y), len("Nepr|Conv"))
             inputBox[i].setText("Nepr|Convex")
+
         elif convex_principality[i] == 1 and convex_convexity[i] == polygon_sign:
             inputBox[i] = Entry(Point(pointsCpy[i].x, pointsCpy[i].y), len("Pr|Conv"))
             inputBox[i].setText("Pr|Convex")
+
         elif convex_convexity[i] == 0 or polygon_sign == 0:
             inputBox[i] = Entry(Point(pointsCpy[i].x, pointsCpy[i].y), len("Coliniare"))
             inputBox[i].setText("Coliniare")
@@ -139,14 +146,31 @@ def graphic(points, cnt_points, convex_convexity, convex_principality):
 
     c.setFill(color_rgb(255, 182, 203))#pink
     c.setOutline(color_rgb(199, 21, 133))
-    c.draw(win)
+    c.draw(win) #draw the polygon lines
 
-    for i in range(1, cnt_points + 1):
+    for i in range(1, cnt_points + 1): #draw points labels
         inputBox[i].draw(win)
 
-    Line(Point(windowWidth / 2, windowHeight), Point(windowWidth / 2, 0)).draw(win)
-    Line(Point(0, windowHeight / 2), Point(windowWidth, windowHeight / 2)).draw(win)
-    print(win.getMouse())  # Pause to view result
+    Line(Point(windowWidth / 2, windowHeight), Point(windowWidth / 2, 0)).draw(win)  #OY
+    Line(Point(0, windowHeight / 2), Point(windowWidth, windowHeight / 2)).draw(win) #OX
+
+    oXStart = Entry(Point(20, windowHeight / 2), 4) #Ox STARTING POINT
+    oXStart.setText(str(int(- windowWidth / 2 / scale)))
+    oXStart.draw(win)
+
+    oXEnd = Entry(Point(windowWidth - 20, windowHeight / 2) , 4)#Ox ENDING POINT
+    oXEnd.setText(str(int(windowWidth / 2 / scale)))
+    oXEnd.draw(win)
+
+    oYStart = Entry(Point(windowWidth / 2, 15) , 4) #Oy STARTING POINT
+    oYStart.setText(str(int(- windowHeight / 2 / scale)))
+    oYStart.draw(win)
+
+    oYEnd = Entry(Point(windowWidth / 2, windowHeight - 15) , 4)    #Oy ENDING POINT
+    oYEnd.setText(str(int(windowHeight / 2 / scale)))
+    oYEnd.draw(win)
+
+    win.getMouse()  # Pause to view result
     win.close()  # Close window when done
 
 def main():
@@ -155,7 +179,6 @@ def main():
     points_principality = points_type(points, cnt_points)
     print_points(points, cnt_points, points_convexity, points_principality)
     graphic(points, cnt_points, points_convexity, points_principality)
-    print(cnt_points)
 
 if __name__ == "__main__":
     main()
