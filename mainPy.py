@@ -102,14 +102,18 @@ def print_points(points, cnt_points, points_convexity, points_principality):
         print("Toate punctele sunt coliniare")
 
 def graphic(points, cnt_points, convex_convexity, convex_principality):
-    margin = 100;
-    scale = 30;
+    scale = 20;
+    windowHeight = 800
+    windowWidth = 1540
     pointsCpy = [Point(0, 0)]
+
     for i in range(1, cnt_points + 1):
-        pointsCpy.append(Point(points[i][0] * scale + margin, 500 - points[i][1] * scale + margin))
+        pointsCpy.append(Point(windowWidth / 2 + points[i][0] * scale,
+                                                 windowHeight / 2 + points[i][1] * scale))
 
     c = Polygon(pointsCpy[1 : cnt_points + 1])
-    win = GraphWin("Points in polygon", 1000, 1000)
+    win = GraphWin("Points in polygon", windowWidth, windowHeight)
+    win.setCoords(0, 0, windowWidth, windowHeight)
     inputBox = [[] for i in range(0, cnt_points + 1)]
 
     polygon_sign = get_polygon_orientation(points, cnt_points)
@@ -140,7 +144,9 @@ def graphic(points, cnt_points, convex_convexity, convex_principality):
     for i in range(1, cnt_points + 1):
         inputBox[i].draw(win)
 
-    win.getMouse()  # Pause to view result
+    Line(Point(windowWidth / 2, windowHeight), Point(windowWidth / 2, 0)).draw(win)
+    Line(Point(0, windowHeight / 2), Point(windowWidth, windowHeight / 2)).draw(win)
+    print(win.getMouse())  # Pause to view result
     win.close()  # Close window when done
 
 def main():
